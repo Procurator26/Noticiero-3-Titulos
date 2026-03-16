@@ -718,8 +718,8 @@ def main(keyword=None, tzname="Europe/Madrid"):
         except Exception as e:
             log(f"[CNMV] Error procesando NIF {nif}: {e}")
             continue
-        if block:
-            cnmv_blocks.append(block)
+        # if block:
+        #     cnmv_blocks.append(block)
 
     cnmv_html = build_html_cnmv(cnmv_blocks)
 
