@@ -6,4 +6,3 @@ extruct
 w3lib
 python-dateutil
 pyyaml
-sentence_transformers

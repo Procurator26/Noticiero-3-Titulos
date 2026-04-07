@@ -654,30 +654,6 @@ def apply_layer3_filter(article_text, final_kw_list):
     
     return any(contains_keyword(article_text, k) for k in final_kw_list)
 
-# Modelo de embeddings para Layer 4 (filtro semántico avanzado)
-model = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
-
-def chunk_text(text, chunk_size=200):
-    words = text.split()
-    return [" ".join(words[i:i+chunk_size]) for i in range(0, len(words), chunk_size)]
-
-
-def agent_filter(text, keywords, threshold=0.5):
-    chunks = chunk_text(text)
-    
-    chunk_emb = model.encode(chunks, convert_to_tensor=True)
-    keyword_emb = model.encode(keywords, convert_to_tensor=True)
-
-    scores = util.cos_sim(chunk_emb, keyword_emb)
-
-    for i, chunk_scores in enumerate(scores):
-        for j, score in enumerate(chunk_scores):
-            if score >= threshold:
-                return True, keywords[j], float(score), chunks[i]
-
-    return False, None, None, None
-
-
 
 def main(keyword=None, tzname="Europe/Madrid"):
     #log(f"CNMV_NIFS configurados: {CNMV_NIFS}")
@@ -748,18 +724,6 @@ def main(keyword=None, tzname="Europe/Madrid"):
                 continue
         log(f"[{i}] Layer_3 PASSED:[{item.get('source','?')}]: {art.get('title','')[:80]}")
         
-        # ========= LAYER 4: Semantic agent filter (advanced semantic matching) =========
-        if kw_list:
-            passed_semantic, matched_kw, score, chunk = agent_filter(
-                article_full_text, 
-                kw_list, 
-                threshold=0.5
-            )
-            if not passed_semantic:
-                log(f"[{i}] Layer_4 NO Passed (semantic): [{item.get('source','?')}]: {art.get('title','')[:80]}")
-                continue
-            log(f"[{i}] Layer_4 PASSED (semantic): matched='{matched_kw}' score={score:.3f}")
-
         art["source"] = item.get("source","?")
         collected.append(art)
         seen.add(url)
