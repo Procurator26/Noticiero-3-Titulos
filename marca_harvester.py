@@ -150,7 +150,7 @@ def http_get(url: str, timeout: int = TIMEOUT) -> requests.Response:
 # ========= EMAIL (Gmail SSL 465) =========
 SMTP_HOST = "smtp.gmail.com"
 SMTP_PORT = 465
-SMTP_USER = "operations@pla-spain.com"
+SMTP_USER = "pla.noticiero@gmail.com"
 SMTP_PASS = os.getenv("SMTP_PASS")
 TO_EMAILS = CFG.get("to_emails", ["anartz2001@gmail.com"])
 
