@@ -1,0 +1,40 @@
+name: Test email
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Test SMTP login
+        env:
+          SMTP_PASS: ${{ secrets.SMTP_PASS }}
+        run: |
+          python - <<'PY'
+          import os
+          import smtplib
+          from email.mime.text import MIMEText
+
+          SMTP_HOST = "smtp.gmail.com"
+          SMTP_PORT = 465
+          SMTP_USER = "pla.noticiero@gmail.com"
+          SMTP_PASS = os.getenv("SMTP_PASS")
+          TO_EMAIL = "jvazquez@pla-spain.com"
+
+          print("SMTP_USER:", SMTP_USER)
+          print("SMTP_PASS exists:", bool(SMTP_PASS))
+          print("SMTP_PASS length:", len(SMTP_PASS) if SMTP_PASS else 0)
+
+          msg = MIMEText("Prueba SMTP OK desde GitHub Actions", "plain", "utf-8")
+          msg["Subject"] = "Prueba SMTP GitHub Actions"
+          msg["From"] = SMTP_USER
+          msg["To"] = TO_EMAIL
+
+          with smtplib.SMTP_SSL(SMTP_HOST, SMTP_PORT) as s:
+              s.login(SMTP_USER, SMTP_PASS)
+              s.sendmail(SMTP_USER, [TO_EMAIL], msg.as_string())
+
+          print("Correo enviado correctamente")
+          PY
