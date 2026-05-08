@@ -152,7 +152,7 @@ SMTP_HOST = "smtp.gmail.com"
 SMTP_PORT = 465
 SMTP_USER = "pla.noticiero@gmail.com"
 SMTP_PASS = os.getenv("SMTP_PASS")
-TO_EMAILS = CFG.get("to_emails", ["anartz2001@gmail.com"])
+TO_EMAILS = CFG.get("to_emails", ["jvazquez@pla-spain.com"])
 
 # ========= UTILIDADES =========
 def norm(s: str) -> str:
