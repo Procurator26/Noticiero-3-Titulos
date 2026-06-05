@@ -65,7 +65,7 @@ excluded_keywords: [
 # Solo se incluirá contenido que contenga estas palabras (tras pasar Layer 1 y Layer 2).
 # Si no quieres usar este filtro, deja la lista vacía: []
 keywords_final_layer: [
-  ""
+  "ERE"
 ]
 
 # 🌍 Zona horaria (normalmente no se toca).
