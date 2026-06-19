@@ -80,6 +80,7 @@ hours_recent: 24
 # Puedes añadir más poniendo cada uno en una línea nueva con "-".
 to_emails:
   - "operations@pla-spain.com"
+  - "mgarana@pla-spain.com"
 
 # 🌐 Medios o páginas de donde se sacan las noticias.
 # Puedes añadir o quitar medios fácilmente copiando un bloque.
